@@ -2,6 +2,7 @@ using Api.Extensions;
 using Application;
 using Application.Abstractions.Services;
 using Application.Settings;
+using AspNetCoreRateLimit;
 using Domain.Entities.Identity;
 using FluentValidation.AspNetCore;
 using Infrastructure;
@@ -89,6 +90,7 @@ app.ConfigureExceptionHandler();
 app.UseStaticFiles();
 
 app.UseCors("AllowAllOrigins");
+app.UseIpRateLimiting();
 //app.UseHttpsRedirection();
 
 app.UseAuthentication();
