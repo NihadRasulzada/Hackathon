@@ -1,0 +1,30 @@
+﻿using Domain.Enums;
+using FluentValidation;
+
+namespace Application.DTOs.Rooms
+{
+    public record CreateRoomDto(
+        int Number,
+        bool RoomStatus,
+        decimal PricePerNight,
+        RoomType RoomType
+
+        );
+    public class CreateRoomDtoValidator : AbstractValidator<CreateRoomDto>
+    {
+        public CreateRoomDtoValidator()
+        {
+            RuleFor(x => x.Number)
+                  .GreaterThan(0).WithMessage("Otaq nömrəsi 0-dan böyük olmalıdır.");
+
+            RuleFor(x => x.PricePerNight)
+                .GreaterThan(0).WithMessage("Qiymət 0-dan böyük olmalıdır.");
+
+            RuleFor(x => x.RoomType)
+                .IsInEnum().WithMessage("Yanlış otaq tipi seçildi.");
+            RuleFor(x => x.RoomType)
+            .IsInEnum()
+            .WithMessage("Düzgün otaq tipi seçin (Single, Double, Suite).");
+        }
+    }
+}

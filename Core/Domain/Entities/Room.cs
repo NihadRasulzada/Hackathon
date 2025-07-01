@@ -1,10 +1,5 @@
 ﻿using Domain.Entities.Common;
 using Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -14,5 +9,9 @@ namespace Domain.Entities
         public RoomType RoomType { get; set; }
         public decimal PricePerNight { get; set; }
         public bool RoomStatus { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
+
+        //rletional properties
+        public ICollection<RoomImage> RoomImages { get; set; }
     }
 }
