@@ -22,6 +22,7 @@ namespace Persistence.Contexts
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Service> Services { get; set; }
 
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             IEnumerable<EntityEntry<BaseEntity>> entries = ChangeTracker.Entries<BaseEntity>();
