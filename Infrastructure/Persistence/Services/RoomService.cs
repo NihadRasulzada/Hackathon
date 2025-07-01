@@ -33,7 +33,8 @@ namespace Persistence.Services
         public async Task<Response> CreateAsync(CreateRoomDto roomDto)
         {
             Room? room=_mapper.Map<Room>(roomDto);
-            if(room == null)
+            room.Id = Guid.NewGuid().ToString();
+            if (room == null)
             {
                 return new Response<GetRoomDto>(ResponseStatusCode.NotFound, "Otaq əlavə edilə bilmədi");
             }

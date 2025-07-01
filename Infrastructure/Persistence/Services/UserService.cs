@@ -47,7 +47,7 @@ namespace Persistence.Services
                 {
                     FinCode = dto.FinCode,
                     FullName = $"{dto.Name} {dto.Surname}",
-                    IsDeleted = false,                    
+                    IsDeleted = false,
                 });
                 
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -4,6 +4,6 @@
     {
         Single,
         Double,
-        Suite 
+        Suit
     }
 }
