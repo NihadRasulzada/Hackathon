@@ -6,7 +6,9 @@ namespace Domain.Entities.Identity
 {
     public partial class AppUser : IdentityUser<string>, IBaseEntity<string>
     {
-        public string FullName { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string FinCode { get; set; }
 
         [NotMapped]
         public bool IsEmailVerified => !string.IsNullOrEmpty(Email) && EmailConfirmed;
@@ -21,7 +23,6 @@ namespace Domain.Entities.Identity
     public partial class AppUser : IdentityUser<string>, IBaseEntity<string>
     {
         public ICollection<AppUserOtp> AppUserOtps { get; set; }
-        public ICollection<Reservation> Reservations { get; set; }
     }
 
 }
