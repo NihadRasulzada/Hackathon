@@ -43,7 +43,11 @@ namespace Persistence
            //ServiceRepo
             services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
             services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
-          
+
+
+            services.AddScoped<IRoomReadRepository, RoomReadRepository>();
+            services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
+
             services.AddScoped<IReservationService, ReservationServices>();
           
 

@@ -57,7 +57,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditLogs", (string)null);
+                    b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
@@ -82,7 +82,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Domain.Entities.Identity.AppRole", b =>
@@ -224,7 +224,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AppUserOtps", (string)null);
+                    b.ToTable("AppUserOtps");
                 });
 
             modelBuilder.Entity("Domain.Entities.Reservation", b =>
@@ -245,19 +245,17 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoomId1")
+                    b.Property<string>("RoomId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("RoomId1");
+                    b.HasIndex("RoomId");
 
-                    b.ToTable("Reservations", (string)null);
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Domain.Entities.ReservationService", b =>
@@ -282,7 +280,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ReservationService", (string)null);
+                    b.ToTable("ReservationServices");
                 });
 
             modelBuilder.Entity("Domain.Entities.Room", b =>
@@ -307,7 +305,40 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RoomImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoomId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Storage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId1");
+
+                    b.ToTable("RoomImages");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service", b =>
@@ -325,13 +356,9 @@ namespace Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ReservationId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -461,7 +488,9 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.Room", "Room")
                         .WithMany("Reservations")
-                        .HasForeignKey("RoomId1");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -485,6 +514,15 @@ namespace Persistence.Migrations
                     b.Navigation("Reservation");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RoomImage", b =>
+                {
+                    b.HasOne("Domain.Entities.Room", "Room")
+                        .WithMany("RoomImages")
+                        .HasForeignKey("RoomId1");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -556,6 +594,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Room", b =>
                 {
                     b.Navigation("Reservations");
+
+                    b.Navigation("RoomImages");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service", b =>
