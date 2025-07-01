@@ -1,9 +1,24 @@
-﻿using Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
+﻿using Application.Repositories;
+using Application;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
+using Persistence.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Application.Repositories.ReservationRepository;
+using Application.MapperProfile;
+using Persistence.Repositories.ReservationRepository;
+using Application.Abstractions.Services;
+using Persistence.Services;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Persistence
 {
@@ -11,6 +26,22 @@ namespace Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
+
+
+
+            //ReservationRepo
+            services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
+            services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
+
+
+            //Services
+            services.AddScoped<IReservationService, ReservationService>();
+
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(ReservationProfile));
+
+        
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Deploy")));
             services.AddIdentity<AppUser, AppRole>(options =>
             {
@@ -33,3 +64,4 @@ namespace Persistence
         }
     }
 }
+
