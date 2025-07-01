@@ -14,6 +14,6 @@ namespace Domain.Entities
         public RoomType RoomType { get; set; }
         public decimal PricePerNight { get; set; }
         public bool RoomStatus { get; set; }
-        public Reservation Reservation { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }

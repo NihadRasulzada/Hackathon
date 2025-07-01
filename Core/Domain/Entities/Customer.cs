@@ -13,6 +13,6 @@ namespace Domain.Entities
         public string PhoneNumber { get; set; }
         public string FinCode { get; set; }
 
-        public Reservation Reservation { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }
