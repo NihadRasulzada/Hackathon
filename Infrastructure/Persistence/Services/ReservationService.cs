@@ -2,6 +2,7 @@
 using Application.DTOs.ReservationDTOs;
 using Application.DTOs.ServiceDTOs;
 using Application.Repositories;
+using Application.Repositories.CustomerRepository;
 using Application.Repositories.ReservationRepository;
 using Application.ResponceObject;
 using Application.ResponceObject.Enums;
@@ -16,18 +17,27 @@ namespace Persistence.Services
     {
         private readonly IReservationReadRepository _readRepository;
         private readonly IReservationWriteRepository _writeRepository;
+        private readonly ICustomeReadRepository _customeReadRepository;
         private readonly IMapper _mapper;
 
 
-        public ReservationServices(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
+        public ReservationServices(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, ICustomeReadRepository customeReadRepository, IMapper mapper)
 
         {
+            _customeReadRepository = customeReadRepository;
             _readRepository = readRepository;
             _writeRepository = writeRepository;
             _mapper = mapper;
         }
         public async Task<Response> CreateReservationAsync(CreateReservationDTOs dto)
-        {
+        {            
+            var customerExists = await _customeReadRepository
+                .GetWhere(c => c.Id == dto.CustomerId )
+                .AnyAsync();
+
+            if (!customerExists)
+                return new Response(ResponseStatusCode.NotFound, $"ID-si {dto.CustomerId} olan müştəri tapılmadı.");
+
             var reservation = _mapper.Map<Reservation>(dto);
 
             bool result = await _writeRepository.AddAsync(reservation);
@@ -58,7 +68,7 @@ namespace Persistence.Services
 
         public async Task<Response<IEnumerable<GetReservationDTOs>>> GetAllReservationsAsync()
         {
-            var reservations = await _readRepository.GetAll().ToListAsync();
+            var reservations = await _readRepository.GetAll().Where(x=>x.IsDeleted==false).ToListAsync();
             var reservationDTOs = _mapper.Map<List<GetReservationDTOs>>(reservations);
 
             return new Response<IEnumerable<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDTOs);
@@ -67,7 +77,7 @@ namespace Persistence.Services
         public async Task<Response<IEnumerable<GetReservationDTOs>>> GetAllSoftDeletedReservationsAsync()
         {
             var deletedReservations = await _readRepository
-                .GetWhere(r => r.IsDeleted == false)
+                .GetWhere(r => r.IsDeleted == true)
                 .ToListAsync();
 
             var reservationDtos = _mapper.Map<List<GetReservationDTOs>>(deletedReservations);
@@ -117,6 +127,13 @@ namespace Persistence.Services
 
             if (reservation == null)
                 return new Response(ResponseStatusCode.NotFound, $"ID-si {id} olan rezervasiya tapılmadı.");
+
+            var customerExists = await _customeReadRepository
+                .GetWhere(c => c.Id == dto.CustomerId && !c.IsDeleted)
+                .AnyAsync();
+
+            if (!customerExists)
+                return new Response(ResponseStatusCode.NotFound, $"ID-si {dto.CustomerId} olan müştəri tapılmadı.");
 
             _mapper.Map(dto, reservation);
 
