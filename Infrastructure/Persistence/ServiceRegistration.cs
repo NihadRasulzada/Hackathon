@@ -20,6 +20,14 @@ using Persistence.Repositories.ReservationRepository;
 using Persistence.Repositories.ServiceRepository;
 using Persistence.Services;
 
+using Application.Repositories;
+using Persistence.Repositories;
+using Application.MappingProfile;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using AspNetCoreRateLimit;
+
+
 
 
 namespace Persistence
@@ -54,6 +62,17 @@ namespace Persistence
 
             services.AddScoped<IReservationService, ReservationServices>();
             services.AddScoped<IPaymentService, PaymentService>();
+
+
+            //Rate Limiter
+            services.AddOptions();
+            services.AddMemoryCache();
+            services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
 
 
 
