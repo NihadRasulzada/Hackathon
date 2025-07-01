@@ -15,11 +15,12 @@ namespace Persistence.Contexts
         {
         }
 
-        public DbSet<Product> Products { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
         public DbSet<AppUserOtp> AppUserOtps { get; set; }
-        public DbSet<Menu> Menus { get; set; }
-        public DbSet<Endpoint> Endpoints { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -35,7 +36,7 @@ namespace Persistence.Contexts
 
             foreach (EntityEntry<BaseEntity> entry in entries)
             {
-                IBaseEntity<Guid> entity = entry.Entity;
+                IBaseEntity<string> entity = entry.Entity;
                 //get userId from context or service provider
                 string userId = ""; // Replace with actual logic to get the userId, e.g., from a service or context
 

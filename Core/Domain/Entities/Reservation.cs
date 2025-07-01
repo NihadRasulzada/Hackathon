@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.Common;
 using Domain.Entities.Identity;
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +12,13 @@ namespace Domain.Entities
 {
     public class Reservation : BaseEntity
     {
-        public AppUser Customer { get; set; }
+        public Customer Customer { get; set; }
         public string CustomerId { get; set; }
 
         public Room Room { get; set; }
         public int RoomId { get; set; }
 
+        public ICollection<Service> Services { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
     }
