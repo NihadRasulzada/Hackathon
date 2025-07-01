@@ -56,6 +56,7 @@ namespace Persistence
             services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
 
             services.AddScoped<IReservationService, ReservationServices>();
+            services.AddScoped<IPaymentService, PaymentService>();
           
 
 

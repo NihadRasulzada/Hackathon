@@ -29,7 +29,7 @@ namespace Persistence.Services
         }
         public async Task<Response> CreateServiceAsync(CreateServiceDTOs dto)
         {
-            var existing = await _readRepository.GetWhere(s => s.Name == dto.Name).FirstOrDefaultAsync();
+            var existing = await _readRepository.Table.Where(s => s.Name == dto.Name).FirstOrDefaultAsync();
             if (existing != null)
                 return new Response(ResponseStatusCode.Error, $"'{dto.Name}' adlı xidmət artıq mövcuddur.");
 

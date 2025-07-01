@@ -11,13 +11,17 @@ public class ReservationController : ControllerBase
 {
     private readonly IReservationService _service;
 
+
     public ReservationController(IReservationService service)
+
     {
         _service = service;
     }
 
     [HttpPost]
+
     public async Task<IActionResult> Create([FromBody] CreateReservationDTOs dto)
+
     {
         Response response = await _service.CreateReservationAsync(dto);
         return this.HandleResponse(response);
@@ -58,7 +62,7 @@ public class ReservationController : ControllerBase
         return this.HandleResponse(response);
     }
 
-    [HttpDelete("soft-delete/{id}")]
+    [HttpPut("soft-delete/{id}")]
     public async Task<IActionResult> SoftDelete(string id)
     {
         var response = await _service.SoftDeleteReservationAsync(id);

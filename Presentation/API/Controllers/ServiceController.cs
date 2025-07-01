@@ -59,7 +59,7 @@ namespace API.Controllers
             return this.HandleResponse(response);
         }
 
-        [HttpDelete("soft-delete/{id}")]
+        [HttpPut("soft-delete/{id}")]
         public async Task<IActionResult> SoftDelete(string id)
         {
             var response = await _service.SoftDeleteServiceAsync(id);

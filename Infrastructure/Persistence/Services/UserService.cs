@@ -37,19 +37,26 @@ namespace Persistence.Services
                 Name = dto.Name,
                 Surname = dto.Surname,
                 FinCode = dto.FinCode,
+                PhoneNumber = dto.PhoneNumber,
             };
+
             IdentityResult result = await _userManager.CreateAsync(user, dto.Password);
+
 
 
             if (result.Succeeded)
             {
                 await _customerWriteRepository.AddAsync(new Domain.Entities.Customer
                 {
+                    Id = Guid.NewGuid().ToString(),
                     FinCode = dto.FinCode,
                     FullName = $"{dto.Name} {dto.Surname}",
                     IsDeleted = false,
+
+                    PhoneNumber = dto.PhoneNumber,
+
                 });
-                
+
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 token = token.UrlEncode();
                 var confirmationLink = $"{_configuration["FrontClientUrl"]}/confirm-email/{user.Id}/{token}";

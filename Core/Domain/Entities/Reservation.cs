@@ -10,6 +10,8 @@ namespace Domain.Entities
         public Room Room { get; set; }
         public string RoomId { get; set; }
 
+        public bool IsPayed { get; set; }
+
         public ICollection<ReservationService> ReservationServices { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }

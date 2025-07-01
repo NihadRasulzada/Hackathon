@@ -4,17 +4,14 @@ using Application.Abstractions.Services;
 using Application.Settings;
 using Domain.Entities.Identity;
 using FluentValidation.AspNetCore;
-
 using Infrastructure;
+using Infrastructure;
+using Infrastructure.Filters;
 using Infrastructure.Services;
+using Infrastructure.Services.Storage.Azure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-
-using Infrastructure.Services.Storage.Azure;
-
 using Persistence;
-using Infrastructure;
-
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +20,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+})
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetAssembly(typeof(Application.ServiceRegistration))))
             .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 builder.Services.AddPersistenceServices(builder.Configuration);
@@ -85,11 +85,11 @@ if (app.Environment.IsDevelopment())
 }
 app.UseSwagger();
 app.UseSwaggerUI();
-//app.ConfigureExceptionHandler();
+app.ConfigureExceptionHandler();
 app.UseStaticFiles();
 
 app.UseCors("AllowAllOrigins");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
