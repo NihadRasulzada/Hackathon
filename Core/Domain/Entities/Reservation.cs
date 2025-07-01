@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Identity;
+﻿using Domain.Entities.Common;
+using Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Reservation
+    public class Reservation : BaseEntity
     {
-        public AppUser Customer { get; set; }
+        public Customer Customer { get; set; }
         public string CustomerId { get; set; }
 
         public Room Room { get; set; }
