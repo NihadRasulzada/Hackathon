@@ -1,0 +1,134 @@
+﻿using Application.Abstractions.Services;
+using Application.DTOs.ReservationDTOs;
+using Application.Repositories;
+using Application.ResponceObject;
+using Application.ResponceObject.Enums;
+using AutoMapper;
+using Domain.Entities;
+
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Persistence.Services
+{
+    public class ReservationService : IReservationService
+    {
+        private readonly IReadRepository<Reservation> _readRepository;
+        private readonly IWriteRepository<Reservation> _writeRepository;
+        private readonly IMapper _mapper;
+
+        public ReservationService(IReadRepository<Reservation> readRepository, IWriteRepository<Reservation> writeRepository, IMapper mapper)
+        {
+            _readRepository = readRepository;
+            _writeRepository = writeRepository;
+            _mapper = mapper;
+        }
+        public async Task<Response> CreateReservationAsync(CreateReservationDTOs dto)
+        {
+            var reservation = _mapper.Map<Reservation>(dto);
+
+            bool result = await _writeRepository.AddAsync(reservation);
+            if (!result)
+                return new Response(ResponseStatusCode.Error, "Rezervasiya əlavə edilə bilmədi.");
+
+            await _writeRepository.SaveAsync();
+
+            return new Response(ResponseStatusCode.Success, "Rezervasiya uğurla əlavə olundu.");
+        }
+
+
+        public async Task<Response> DeleteReservationAsync(string id)
+        {
+            var reservation = await _readRepository
+                .GetWhere(r => r.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (reservation == null)
+                return new Response(ResponseStatusCode.NotFound, $"ID-si {id} olan rezervasiya tapılmadı.");
+
+            await _writeRepository.RemoveAsync(id);
+            await _writeRepository.SaveAsync();
+
+            return new Response(ResponseStatusCode.Success, "Rezervasiya uğurla silindi.");
+        }
+
+
+        public async Task<Response<List<GetReservationDTOs>>> GetAllReservationsAsync()
+        {
+            var reservations = await _readRepository.GetAll().ToListAsync();
+            var reservationDTOs = _mapper.Map<List<GetReservationDTOs>>(reservations);
+
+            return new Response<List<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDTOs);
+        }
+
+        public async Task<Response<List<GetReservationDTOs>>> GetAllSoftDeletedReservationsAsync()
+        {
+            var deletedReservations = await _readRepository
+                .GetWhere(r => r.IsDeleted == true)
+                .ToListAsync();
+
+            var reservationDtos = _mapper.Map<List<GetReservationDTOs>>(deletedReservations);
+
+            return new Response<List<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDtos);
+        }
+
+
+        public async Task<Response<GetReservationDTOs>> GetReservationByIdAsync(string id)
+        {
+            var reservation = await _readRepository
+                .GetWhere(r => r.Id == id && r.IsDeleted == false)
+                .FirstOrDefaultAsync();
+
+            if (reservation == null)
+                return new Response<GetReservationDTOs>(ResponseStatusCode.NotFound, $"ID-si {id} olan rezervasiya tapılmadı.");
+
+            var dto = _mapper.Map<GetReservationDTOs>(reservation);
+            return new Response<GetReservationDTOs>(ResponseStatusCode.Success, dto);
+        }
+
+
+
+        public async Task<Response> SoftDeleteReservationAsync(string id)
+        {
+            var reservation = await _readRepository
+                .GetWhere(r => r.Id == id && r.IsDeleted == false)
+                .FirstOrDefaultAsync();
+
+            if (reservation == null)
+                return new Response(ResponseStatusCode.NotFound, $"ID-si {id} olan rezervasiya tapılmadı və ya artıq silinib.");
+
+            reservation.IsDeleted = true;
+
+            _writeRepository.Update(reservation);
+            await _writeRepository.SaveAsync();
+
+            return new Response(ResponseStatusCode.Success, "Rezervasiya uğurla silindi.");
+        }
+
+
+        public async Task<Response> UpdateReservationAsync(string id, UpdateReservationDTOs dto)
+        {
+            var reservation = await _readRepository
+                .GetWhere(r => r.Id == id && r.IsDeleted == false)
+                .FirstOrDefaultAsync();
+
+            if (reservation == null)
+                return new Response(ResponseStatusCode.NotFound, $"ID-si {id} olan rezervasiya tapılmadı.");
+
+            _mapper.Map(dto, reservation);
+
+            _writeRepository.Update(reservation);
+            await _writeRepository.SaveAsync();
+
+            return new Response(ResponseStatusCode.Success, "Rezervasiya uğurla yeniləndi.");
+        }
+
+
+    }
+}
