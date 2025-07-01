@@ -4,11 +4,17 @@ using Application.Abstractions.Services;
 using Application.Settings;
 using Domain.Entities.Identity;
 using FluentValidation.AspNetCore;
+
 using Infrastructure;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+
+using Infrastructure.Services.Storage.Azure;
+
 using Persistence;
+using Infrastructure;
+
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +28,10 @@ builder.Services.AddControllers()
             .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+
 builder.Services.AddApplicationServices();
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenOption"));
-
+builder.Services.AddStorage<AzureStorage>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", builder =>

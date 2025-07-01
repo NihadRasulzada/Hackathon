@@ -10,5 +10,8 @@ namespace Domain.Entities
         public decimal PricePerNight { get; set; }
         public bool RoomStatus { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
+
+        //rletional properties
+        public ICollection<RoomImage> RoomImages { get; set; }
     }
 }

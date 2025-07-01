@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.ReservationDTOs;
+using Application.DTOs.ServiceDTOs;
 using Application.Repositories;
 using Application.Repositories.ReservationRepository;
 using Application.ResponceObject;
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Services
 {
-    public class ReservationService : IReservationService
+    public class ReservationServices : IReservationService
     {
         private readonly IReservationReadRepository _readRepository;
         private readonly IReservationWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
+
         public ReservationService(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
+
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
@@ -53,23 +56,23 @@ namespace Persistence.Services
         }
 
 
-        public async Task<Response<List<GetReservationDTOs>>> GetAllReservationsAsync()
+        public async Task<Response<IEnumerable<GetReservationDTOs>>> GetAllReservationsAsync()
         {
             var reservations = await _readRepository.GetAll().ToListAsync();
             var reservationDTOs = _mapper.Map<List<GetReservationDTOs>>(reservations);
 
-            return new Response<List<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDTOs);
+            return new Response<IEnumerable<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDTOs);
         }
 
-        public async Task<Response<List<GetReservationDTOs>>> GetAllSoftDeletedReservationsAsync()
+        public async Task<Response<IEnumerable<GetReservationDTOs>>> GetAllSoftDeletedReservationsAsync()
         {
             var deletedReservations = await _readRepository
-                .GetWhere(r => r.IsDeleted == true)
+                .GetWhere(r => r.IsDeleted == false)
                 .ToListAsync();
 
             var reservationDtos = _mapper.Map<List<GetReservationDTOs>>(deletedReservations);
 
-            return new Response<List<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDtos);
+            return new Response<IEnumerable<GetReservationDTOs>>(ResponseStatusCode.Success, reservationDtos);
         }
 
 
@@ -121,6 +124,16 @@ namespace Persistence.Services
             await _writeRepository.SaveAsync();
 
             return new Response(ResponseStatusCode.Success, "Rezervasiya uğurla yeniləndi.");
+        }
+
+        public async Task<Response> GetReservationByIdAsyncSoftDelete(string id)
+        {
+            var reservation = await _readRepository.GetWhere(s => s.Id == id && s.IsDeleted).FirstOrDefaultAsync();
+            if (reservation == null)
+                return new Response(ResponseStatusCode.NotFound, $"ID-si {id} olan silinmiş reservation tapılmadı.");
+
+            var dto = _mapper.Map<GetReservationDTOs>(reservation);
+            return new Response<GetReservationDTOs>(ResponseStatusCode.Success, dto);
         }
 
 

@@ -1,7 +1,12 @@
 using Application.Abstractions.Services;
 using Application.MapperProfile;
+
 using Application.Repositories.CustomerRepository;
+
+using Application.MappingProfiles;
+
 using Application.Repositories.ReservationRepository;
+using Application.Repositories.ServiceRepository;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repositories.CustomerRepository;
 using Persistence.Repositories.ReservationRepository;
+using Persistence.Repositories.ServiceRepository;
 using Persistence.Services;
 
 
@@ -24,21 +30,36 @@ namespace Persistence
             services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
             services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
 
+
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
+           //ServiceRepo
+            services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
+            services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
+          
+            services.AddScoped<IReservationService, ReservationService>();
+          
 
 
             //Services
-            services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITwoFactorAuthenticationService, TwoFactorAuthenticationService>();
+   
+            //Services
+            services.AddScoped<IServicesService, ServicesService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IReservationServicesService, ReservationServicesService>();
+
+
+
 
 
 
             //AutoMapper
             services.AddAutoMapper(typeof(ReservationProfile));
+            services.AddAutoMapper(typeof(ServiceProfile));
 
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Deploy")));

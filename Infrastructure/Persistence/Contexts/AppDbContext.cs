@@ -19,8 +19,11 @@ namespace Persistence.Contexts
         public DbSet<AppUserOtp> AppUserOtps { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ReservationService> ReservationServices { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<RoomImage> RoomImages { get; set; }
+
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
