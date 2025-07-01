@@ -15,7 +15,7 @@ public class ReservationServicesController : ControllerBase
     }
 
     [HttpPost]
-    /*public async Task<IActionResult> Create([FromBody] CreateReservationServiceDTOs dto)
+    public async Task<IActionResult> Create([FromBody] CreateReservationServiceDTOs dto)
     {
         var response = await _service.CreateReservationServiceAsync(dto);
         return this.HandleResponse(response);

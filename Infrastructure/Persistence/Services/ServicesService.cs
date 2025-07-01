@@ -34,6 +34,7 @@ namespace Persistence.Services
                 return new Response(ResponseStatusCode.Error, $"'{dto.Name}' adlı xidmət artıq mövcuddur.");
 
             var service = _mapper.Map<Service>(dto);
+            service.Id = Guid.NewGuid().ToString();
             var result = await _writeRepository.AddAsync(service);
             if (!result)
                 return new Response(ResponseStatusCode.Error, "Xidmət yaradılmadı.");

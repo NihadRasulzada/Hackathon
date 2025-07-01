@@ -19,6 +19,9 @@ using Persistence.Repositories.ServiceRepository;
 using Persistence.Services;
 using Application.Repositories;
 using Persistence.Repositories;
+using Application.MappingProfile;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 
 
@@ -35,7 +38,9 @@ namespace Persistence
             services.AddScoped<IRoomReadRepository, RoomReadRepository>();
             services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
 
-            
+            //FluentValidation
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining(typeof(ServiceRegistration));
 
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
@@ -71,6 +76,7 @@ namespace Persistence
             //AutoMapper
             services.AddAutoMapper(typeof(ReservationProfile));
             services.AddAutoMapper(typeof(ServiceProfile));
+            services.AddAutoMapper(typeof(RoomProfile));
 
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Deploy")));
