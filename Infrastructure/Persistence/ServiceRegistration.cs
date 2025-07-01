@@ -40,6 +40,8 @@ namespace Persistence
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
 
+            services.AddScoped<IRoomService, RoomService>();
+
            //ServiceRepo
             services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
             services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
@@ -50,6 +52,7 @@ namespace Persistence
 
             services.AddScoped<IReservationService, ReservationServices>();
           
+
 
 
             //Services
