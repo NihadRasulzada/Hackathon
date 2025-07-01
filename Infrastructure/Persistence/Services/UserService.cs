@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.UserServiceDTOs.Responses;
+using Application.Enums;
 using Application.Helpers;
 using Application.Repositories.CustomerRepository;
 using Application.ResponceObject;
@@ -15,16 +16,18 @@ namespace Persistence.Services
     public class UserService : IUserService
     {
         readonly UserManager<AppUser> _userManager;
+        readonly RoleManager<AppRole> _roleManager;
         readonly IConfiguration _configuration;
         readonly IMailService _mailService;
         readonly ICustomerWriteRepository _customerWriteRepository;
 
-        public UserService(UserManager<AppUser> userManager, IConfiguration configuration, IMailService mailService, ICustomerWriteRepository customerWriteRepository)
+        public UserService(UserManager<AppUser> userManager, IConfiguration configuration, IMailService mailService, ICustomerWriteRepository customerWriteRepository, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
             _configuration = configuration;
             _mailService = mailService;
             _customerWriteRepository = customerWriteRepository;
+            _roleManager = roleManager;
         }
 
         public async Task<Response> CreateAsync(CreateUserUserServiceDTOs dto)
@@ -42,6 +45,8 @@ namespace Persistence.Services
 
             IdentityResult result = await _userManager.CreateAsync(user, dto.Password);
 
+
+            await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
 
 
             if (result.Succeeded)

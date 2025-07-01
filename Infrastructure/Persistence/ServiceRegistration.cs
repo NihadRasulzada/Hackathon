@@ -1,28 +1,32 @@
 using Application.Abstractions.Services;
 using Application.MapperProfile;
-
-using Application.Repositories.CustomerRepository;
-
+using Application.MappingProfile;
 using Application.MappingProfiles;
-
+using Application.Repositories;
+using Application.Repositories.CustomerRepository;
 using Application.Repositories.ReservationRepository;
 using Application.Repositories.ServiceRepository;
 using Domain.Entities.Identity;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
+using Persistence.Repositories;
 using Persistence.Repositories.CustomerRepository;
 using Persistence.Repositories.ReservationRepository;
 using Persistence.Repositories.ServiceRepository;
 using Persistence.Services;
+
 using Application.Repositories;
 using Persistence.Repositories;
 using Application.MappingProfile;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using AspNetCoreRateLimit;
+
 
 
 
@@ -48,7 +52,7 @@ namespace Persistence
 
             services.AddScoped<IRoomService, RoomService>();
 
-           //ServiceRepo
+            //ServiceRepo
             services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
             services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
 
@@ -58,6 +62,7 @@ namespace Persistence
 
             services.AddScoped<IReservationService, ReservationServices>();
             services.AddScoped<IPaymentService, PaymentService>();
+
 
             //Rate Limiter
             services.AddOptions();
@@ -71,12 +76,13 @@ namespace Persistence
 
 
 
+
             //Services
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITwoFactorAuthenticationService, TwoFactorAuthenticationService>();
-   
+
             //Services
             services.AddScoped<IServicesService, ServicesService>();
             services.AddScoped<IRoomService, RoomService>();

@@ -44,23 +44,13 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateUser(CreateUserUserServiceDTOs dto)
         {
-            var response = await _userService.CreateAsync(new()
-            {
-                Email = dto.Email,
-                Name = dto.Name,
-                FinCode= dto.FinCode,
-                Surname = dto.Surname,
-                Username = dto.Username,
-                Password = dto.Password,
-                PasswordConfirm = dto.PasswordConfirm,
-                PhoneNumber = dto.PhoneNumber
-            });
+            var response = await _userService.CreateAsync(dto);
 
             return this.HandleResponse(response);
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<GetAllUsersUserSeviceResponseDTOs>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response<GetAllUsersUserSeviceResponseDTOs>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response<GetAllUsersUserSeviceResponseDTOs>))]

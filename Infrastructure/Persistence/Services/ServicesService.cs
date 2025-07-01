@@ -1,17 +1,11 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.ServiceDTOs;
-using Application.Repositories;
 using Application.Repositories.ServiceRepository;
 using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
@@ -21,7 +15,7 @@ namespace Persistence.Services
         private readonly IServiceWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
-        public ServicesService(IServiceReadRepository readRepository, IServiceWriteRepository writeRepository,IMapper mapper)
+        public ServicesService(IServiceReadRepository readRepository, IServiceWriteRepository writeRepository, IMapper mapper)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
@@ -85,7 +79,8 @@ namespace Persistence.Services
 
         public async Task<Response<IEnumerable<GetServiceDTOs>>> GetAllSoftDeletedServicesAsync()
         {
-            var services = await _readRepository.GetAll().Where(s => s.IsDeleted==true).ToListAsync();
+            var services = await _readRepository.GetAll().Where(s => s.IsDeleted == false).ToListAsync();
+
             var mapped = _mapper.Map<IEnumerable<GetServiceDTOs>>(services);
             return new Response<IEnumerable<GetServiceDTOs>>(ResponseStatusCode.Success, mapped);
         }

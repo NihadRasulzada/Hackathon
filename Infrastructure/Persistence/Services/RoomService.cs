@@ -6,42 +6,36 @@ using Application.ResponceObject.Enums;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
     public class RoomService : IRoomService
     {
 
- 
+
         private readonly IRoomReadRepository _readRepository;
         private readonly IRoomWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
         public RoomService(IRoomReadRepository readRepository, IRoomWriteRepository writeRepository, IMapper mapper)
         {
-     
+
             _readRepository = readRepository;
             _writeRepository = writeRepository;
             _mapper = mapper;
         }
         public async Task<Response> CreateAsync(CreateRoomDto roomDto)
         {
-            Room? room=_mapper.Map<Room>(roomDto);
+            Room? room = _mapper.Map<Room>(roomDto);
             room.Id = Guid.NewGuid().ToString();
             if (room == null)
             {
                 return new Response<GetRoomDto>(ResponseStatusCode.NotFound, "Otaq əlavə edilə bilmədi");
             }
-            bool result=await _writeRepository.AddAsync(room);
+            bool result = await _writeRepository.AddAsync(room);
             if (!result)
                 return new Response<GetRoomDto>(ResponseStatusCode.Error, "Otaq əlavə edilə bilmədi");
-        
+
             await _writeRepository.SaveAsync();
 
             return new Response(ResponseStatusCode.Success, "Otaq uğurla əlavə edildi.");
@@ -131,7 +125,7 @@ namespace Persistence.Services
 
         }
 
-        public async Task<Response> UpdateAsync(string id,UpdateRoomDto roomDto)
+        public async Task<Response> UpdateAsync(string id, UpdateRoomDto roomDto)
         {
             var room = await _readRepository
                .GetWhere(r => r.Id == id && r.IsDeleted == false)
@@ -149,6 +143,6 @@ namespace Persistence.Services
 
         }
 
-        
+
     }
 }

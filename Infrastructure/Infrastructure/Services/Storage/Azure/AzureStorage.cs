@@ -1,59 +1,79 @@
-﻿using Application.Abstractions.Storage.Azure;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Services.Storage.Azure
 {
-    public class AzureStorage : Storage, IAzureStorage
+    public class AzureStorage
     {
-        readonly BlobServiceClient _blobServiceClient;
-        BlobContainerClient _blobContainerClient;
-        public AzureStorage(IConfiguration configuration)
-        {
-            _blobServiceClient = new(configuration["Storage:Azure"]);
-        }
-        public async Task DeleteAsync(string containerName, string fileName)
-        {
-            _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            await blobClient.DeleteAsync();
-        }
+        private readonly string _connectionString = "DefaultEndpointsProtocol=https;AccountName=blobstoragetest222;AccountKey=ruAtBhkDGaf8HOqaDa7c1hBW3o1hpHhM+g7WIuF7TAGSapwSNdQIqXdNgp4iEcIgphWMBMYAaeZk+AStx2TFhw==;EndpointSuffix=core.windows.net";
 
-        public List<string> GetFiles(string containerName)
+        private readonly BlobContainerClient _containerClient;
+
+
+        public AzureStorage()
         {
-            _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-            return _blobContainerClient.GetBlobs().Select(b => b.Name).ToList();
+            BlobServiceClient serviceClient = new(_connectionString);
+            _containerClient = serviceClient.GetBlobContainerClient("images");
+
         }
 
-        public bool HasFile(string containerName, string fileName)
+        public async Task<string> UploadAsync(IFormFile file)
         {
-            _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-            return _blobContainerClient.GetBlobs().Any(b => b.Name == fileName);
-        }
+            string blobName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
 
-        public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string containerName, IFormFileCollection files)
-        {
-            _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-            await _blobContainerClient.CreateIfNotExistsAsync();
-            await _blobContainerClient.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+            BlobClient blob = _containerClient.GetBlobClient(blobName);
 
-            List<(string fileName, string pathOrContainerName)> datas = new();
-            foreach (IFormFile file in files)
+
+            var stream = file.OpenReadStream();
+
+            //Blob üçün müəyyən Configuration
+            BlobHttpHeaders headers = new BlobHttpHeaders()
             {
-                string fileNewName = await FileRenameAsync(containerName, file.Name, HasFile);
+                ContentType = file.ContentType
+            };
 
-                BlobClient blobClient = _blobContainerClient.GetBlobClient(fileNewName);
-                await blobClient.UploadAsync(file.OpenReadStream());
-                datas.Add((fileNewName, $"{containerName}/{fileNewName}"));
-            }
-            return datas;
+            //AzureSave
+            await blob.UploadAsync(stream, headers);
+
+
+            return blobName;
         }
+
+        public string GetBlobLink(string blobName)
+        {
+            BlobClient blob = _containerClient.GetBlobClient(blobName);
+
+            string blobUrl = blob.Uri.ToString();
+
+            return blobUrl;
+        }
+
+        public async Task<string> DeleteBlobAsync(string blobName)
+        {
+            string message = string.Empty;
+            BlobClient blob = _containerClient.GetBlobClient(blobName);
+            /* var response = await blob.ExistsAsync();
+             if (!response.Value)
+             {
+                 message = "Blob tapilmadi";
+             }
+
+             await blob.DeleteAsync();*/
+
+            var response = await blob.DeleteIfExistsAsync();
+
+            if (response.Value)
+            {
+                message = "Blob ugurla silindi.";
+            }
+            else
+            {
+                message = "Blob tapilmadi.";
+            }
+
+            return message;
+        }
+
     }
 }

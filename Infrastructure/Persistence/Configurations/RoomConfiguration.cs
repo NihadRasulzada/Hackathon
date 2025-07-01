@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Configurations
 {
@@ -33,7 +28,7 @@ namespace Persistence.Configurations
             builder.Property(r => r.RoomStatus)
                    .IsRequired();
 
-       
+
             // Soft delete üçün IsDeleted (default false)
             builder.Property(r => r.IsDeleted)
                    .HasDefaultValue(false)
