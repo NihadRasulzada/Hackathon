@@ -1,13 +1,11 @@
 ﻿using Application.Abstractions.Services;
-using Response = Application.ResponceObject.Response;
+using Application.ResponceObject.Enums;
 using Application.Settings;
 using Microsoft.Extensions.Options;
 using Twilio;
-using Twilio.Http;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
-using Application.ResponceObject.Enums;
-using System.Threading.Tasks;
+using Response = Application.ResponceObject.Response;
 
 namespace Infrastructure.Services
 {

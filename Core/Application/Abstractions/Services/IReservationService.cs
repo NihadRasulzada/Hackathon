@@ -1,13 +1,5 @@
 ﻿using Application.DTOs.ReservationDTOs;
 using Application.ResponceObject;
-using Domain.Entities;
-
-using Microsoft.AspNetCore.Http.HttpResults;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Application.Abstractions.Services
@@ -17,7 +9,7 @@ namespace Application.Abstractions.Services
         Task<Response> CreateReservationAsync(CreateReservationDTOs dto);
         Task<Response<IEnumerable<GetReservationDTOs>>> GetAllReservationsAsync();
         Task<Response<GetReservationDTOs>> GetReservationByIdAsync(string id);
-        Task<Response> UpdateReservationAsync(string id,UpdateReservationDTOs dto);
+        Task<Response> UpdateReservationAsync(string id, UpdateReservationDTOs dto);
         Task<Response> DeleteReservationAsync(string id);
         Task<Response<IEnumerable<GetReservationDTOs>>> GetAllSoftDeletedReservationsAsync();
         Task<Response> SoftDeleteReservationAsync(string id);

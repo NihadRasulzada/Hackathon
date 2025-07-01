@@ -7,14 +7,7 @@ using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using AutoMapper;
 using Domain.Entities;
-
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Persistence.Services
@@ -25,7 +18,9 @@ namespace Persistence.Services
         private readonly IReservationWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
-        public ReservationServices(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
+
+        public ReservationService(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
+
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
