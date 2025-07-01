@@ -11,8 +11,8 @@ namespace Application.DTOs.Rooms
    (
         string id, 
         int Number
-        //bool RoomStatus,
-        //decimal PricePerNight,
-        //RoomType RoomType
+        bool RoomStatus,
+        decimal PricePerNight,
+        RoomType RoomType
         );
 }

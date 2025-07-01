@@ -17,7 +17,8 @@ using Persistence.Repositories.CustomerRepository;
 using Persistence.Repositories.ReservationRepository;
 using Persistence.Repositories.ServiceRepository;
 using Persistence.Services;
-
+using Application.Repositories;
+using Persistence.Repositories;
 
 
 namespace Persistence
@@ -33,12 +34,16 @@ namespace Persistence
 
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
-           //ServiceRepo
+
+            services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
+            services.AddScoped<IRoomReadRepository, RoomReadRepository>();
+            //ServiceRepo
             services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
             services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
           
-            services.AddScoped<IReservationService, ReservationService>();
-          
+            services.AddScoped<IReservationService, ReservationServices>();
+            services.AddScoped<IRoomService, RoomService>();
+
 
 
             //Services

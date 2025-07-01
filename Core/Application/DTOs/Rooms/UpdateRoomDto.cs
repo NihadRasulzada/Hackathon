@@ -9,7 +9,7 @@ namespace Application.DTOs.Rooms
 {
     public record UpdateRoomDto
     (
-        string id,
+  
         int Number,
         bool RoomStatus,
         decimal PricePerNight,
