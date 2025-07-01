@@ -1,6 +1,8 @@
 using Application.Abstractions.Services;
 using Application.MapperProfile;
+using Application.MappingProfiles;
 using Application.Repositories.ReservationRepository;
+using Application.Repositories.ServiceRepository;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repositories.ReservationRepository;
-using Persistence.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Domain.Entities.Identity;
-using Application.MappingProfiles;
-using Application.Repositories.ServiceRepository;
 using Persistence.Repositories.ServiceRepository;
+using Persistence.Services;
 
 
 
@@ -35,8 +32,12 @@ namespace Persistence
 
 
             //Services
-            services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IReservationService, ReservationServices>();
             services.AddScoped<IServicesService, ServicesService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IReservationServicesService, ReservationServicesService>();
+
+
 
 
 

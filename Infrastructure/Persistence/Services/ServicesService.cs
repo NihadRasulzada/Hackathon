@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.ServiceDTOs;
 using Application.Repositories;
+using Application.Repositories.ServiceRepository;
 using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using AutoMapper;
@@ -16,11 +17,11 @@ namespace Persistence.Services
 {
     public class ServicesService : IServicesService
     {
-        private readonly IReadRepository<Service> _readRepository;
-        private readonly IWriteRepository<Service> _writeRepository;
+        private readonly IServiceReadRepository _readRepository;
+        private readonly IServiceWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
-        public ServicesService(IReadRepository<Service> readRepository, IWriteRepository<Service> writeRepository,IMapper mapper)
+        public ServicesService(IServiceReadRepository readRepository, IServiceWriteRepository writeRepository,IMapper mapper)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;

@@ -2,6 +2,7 @@
 using Application.DTOs.ReservationDTOs;
 using Application.DTOs.ServiceDTOs;
 using Application.Repositories;
+using Application.Repositories.ReservationRepository;
 using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using AutoMapper;
@@ -18,13 +19,13 @@ using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
-    public class ReservationService : IReservationService
+    public class ReservationServices : IReservationService
     {
-        private readonly IReadRepository<Reservation> _readRepository;
-        private readonly IWriteRepository<Reservation> _writeRepository;
+        private readonly IReservationReadRepository _readRepository;
+        private readonly IReservationWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
-        public ReservationService(IReadRepository<Reservation> readRepository, IWriteRepository<Reservation> writeRepository, IMapper mapper)
+        public ReservationServices(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
