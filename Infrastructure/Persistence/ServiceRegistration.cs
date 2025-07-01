@@ -18,6 +18,8 @@ using Persistence.Repositories.ReservationRepository;
 using Application.Abstractions.Services;
 using Persistence.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Domain.Entities.Identity;
 
 
 namespace Persistence
@@ -26,8 +28,6 @@ namespace Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-
-
 
             //ReservationRepo
             services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
