@@ -1,5 +1,6 @@
 using Application.Abstractions.Services;
 using Application.MapperProfile;
+using Application.Repositories.CustomerRepository;
 using Application.Repositories.ReservationRepository;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -7,11 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
+using Persistence.Repositories.CustomerRepository;
 using Persistence.Repositories.ReservationRepository;
 using Persistence.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Domain.Entities.Identity;
 
 
 
@@ -25,9 +24,17 @@ namespace Persistence
             services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
             services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
 
+            services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+            services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
+
 
             //Services
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITwoFactorAuthenticationService, TwoFactorAuthenticationService>();
+
 
 
             //AutoMapper

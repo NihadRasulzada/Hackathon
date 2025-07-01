@@ -1,29 +1,23 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.ReservationDTOs;
 using Application.Repositories;
+using Application.Repositories.ReservationRepository;
 using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using AutoMapper;
 using Domain.Entities;
-
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Persistence.Services
 {
     public class ReservationService : IReservationService
     {
-        private readonly IReadRepository<Reservation> _readRepository;
-        private readonly IWriteRepository<Reservation> _writeRepository;
+        private readonly IReservationReadRepository _readRepository;
+        private readonly IReservationWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
-        public ReservationService(IReadRepository<Reservation> readRepository, IWriteRepository<Reservation> writeRepository, IMapper mapper)
+        public ReservationService(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;

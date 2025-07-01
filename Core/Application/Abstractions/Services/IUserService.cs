@@ -15,6 +15,6 @@ namespace Application.Abstractions.Services
         int TotalUsersCount { get; }
         Task<Response> AssignRoleToUserAsnyc(string userId, string[] roles);
         Task<Response<string[]>> GetRolesToUserAsync(string userIdOrName);
-        Task<Response> HasRolePermissionToEndpointAsync(string name, string code);
+
     }
 }
