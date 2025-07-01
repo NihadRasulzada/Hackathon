@@ -46,7 +46,7 @@ namespace Persistence.Services
             IdentityResult result = await _userManager.CreateAsync(user, dto.Password);
 
 
-            await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
+            await _userManager.AddToRoleAsync(user, Roles.Manager.ToString());
 
 
             if (result.Succeeded)

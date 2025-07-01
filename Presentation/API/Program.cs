@@ -88,7 +88,7 @@ app.ConfigureExceptionHandler();
 app.UseStaticFiles();
 
 app.UseCors("AllowAllOrigins");
-app.UseIpRateLimiting();
+
 //app.UseHttpsRedirection();
 
 app.UseAuthentication();
