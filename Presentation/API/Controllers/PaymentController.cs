@@ -1,6 +1,5 @@
 ﻿using Api.Extensions;
 using Application.Abstractions.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

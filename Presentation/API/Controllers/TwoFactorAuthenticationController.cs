@@ -1,7 +1,6 @@
 ﻿using Api.Extensions;
 using Application.Abstractions.Services;
 using Application.ResponceObject;
-using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -4,11 +4,6 @@ using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using Domain.Entities;
 using Stripe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
@@ -29,7 +24,7 @@ namespace Persistence.Services
             {
                 new Response(ResponseStatusCode.NotFound, "Reservation not found.");
             }
-            if(reservation.IsPayed)
+            if (reservation.IsPayed)
             {
                 return new Response<object>(ResponseStatusCode.ValidationError, "Reservation is already paid.");
             }
@@ -45,7 +40,7 @@ namespace Persistence.Services
 
             var options = new PaymentIntentCreateOptions
             {
-                Amount =  Convert.ToInt64(price),
+                Amount = Convert.ToInt64(price),
                 Currency = "usd",
                 PaymentMethodTypes = new List<string> { "card" },
             };

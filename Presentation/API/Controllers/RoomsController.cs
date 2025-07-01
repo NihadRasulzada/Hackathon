@@ -1,7 +1,6 @@
 ﻿using Api.Extensions;
 using Application.Abstractions.Services;
 using Application.DTOs.Rooms;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
