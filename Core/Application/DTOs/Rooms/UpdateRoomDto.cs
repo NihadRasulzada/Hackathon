@@ -1,9 +1,5 @@
 ﻿using Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FluentValidation;
 
 namespace Application.DTOs.Rooms
 {
@@ -14,4 +10,21 @@ namespace Application.DTOs.Rooms
         decimal PricePerNight,
         RoomType RoomType
     );
+    public class UpdateRoomDtoValidator : AbstractValidator<UpdateRoomDto>
+    {
+        public UpdateRoomDtoValidator()
+        {
+            RuleFor(x => x.Number)
+                .GreaterThan(0).WithMessage("Otaq nömrəsi 0-dan böyük olmalıdır.");
+
+            RuleFor(x => x.PricePerNight)
+                .GreaterThan(0).WithMessage("Qiymət 0-dan böyük olmalıdır.");
+
+            RuleFor(x => x.RoomType)
+                .IsInEnum().WithMessage("Yanlış otaq tipi seçildi.");
+            RuleFor(x => x.RoomType)
+           .IsInEnum()
+           .WithMessage("Düzgün otaq tipi seçin (Single, Double, Suite).");
+        }
+    }
 }

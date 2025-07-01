@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.ReservationServiceDTOs;
-using Application.Repositories;
 using Application.Repositories.ReservationRepository;
 using Application.Repositories.ServiceRepository;
 using Application.ResponceObject;
@@ -8,12 +7,6 @@ using Application.ResponceObject.Enums;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Services
 {

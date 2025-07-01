@@ -15,10 +15,6 @@ namespace Application.DTOs.AuthServiceDTOs
             RuleFor(x => x.UserId)
                 .NotEmpty().WithMessage("UserId cannot be empty.")
                 .Must(BeAValidGuid).WithMessage("UserId must be a valid GUID.");
-
-            RuleFor(x => x.Token)
-                .NotEmpty().WithMessage("Token cannot be empty.")
-                .Length(6, 100).WithMessage("Token must be between 6 and 100 characters.");
         }
 
         // GUID doğrulama fonksiyonu

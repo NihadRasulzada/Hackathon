@@ -1,10 +1,7 @@
 ﻿using Application.Abstractions.Services;
-using Application.Abstractions.Storage;
 using Application.Abstractions.Token;
 using Application.Settings;
 using Infrastructure.Services;
-using Infrastructure.Services.Storage;
-using Infrastructure.Services.Storage.Azure;
 using Infrastructure.Services.Token;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,14 +17,8 @@ namespace Infrastructure
             services.AddTransient<ISmsService, TwilloSmsService>();
             services.AddTransient<IOtpService, OtpService>();
             services.AddOptions<TwilioSettings>().Bind(configuration.GetSection("Twilio"));
-            services.AddScoped<IStorageService, StorageService>();
-           
-        }
+            //services.AddScoped<IAzureStorage, AzureStorage>();
 
-        public static void AddStorage<T>(this IServiceCollection services) where T : Storage, IStorage
-        {
-            services.AddScoped<IStorage, T>();
         }
-
     }
 }

@@ -5,7 +5,6 @@ using Application.Settings;
 using Domain.Entities.Identity;
 using FluentValidation.AspNetCore;
 using Infrastructure;
-using Infrastructure;
 using Infrastructure.Filters;
 using Infrastructure.Services;
 using Infrastructure.Services.Storage.Azure;
@@ -31,7 +30,6 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddApplicationServices();
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenOption"));
-builder.Services.AddStorage<AzureStorage>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", builder =>

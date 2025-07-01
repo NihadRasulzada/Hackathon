@@ -3,11 +3,7 @@ using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
@@ -32,7 +28,7 @@ namespace Persistence.Services
                 return new Response(ResponseStatusCode.ValidationError, "Two-factor authentication is already disabled.");
             }
             IdentityResult result = await _userManager.SetTwoFactorEnabledAsync(user, false);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 StringBuilder errorMessage = new StringBuilder("Failed to disable two-factor authentication: ");
                 foreach (var error in result.Errors)
@@ -57,7 +53,7 @@ namespace Persistence.Services
                 return new Response(ResponseStatusCode.ValidationError, "Two-factor authentication is already enabled.");
             }
             IdentityResult result = await _userManager.SetTwoFactorEnabledAsync(user, true);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 StringBuilder errorMessage = new StringBuilder("Failed to enable two-factor authentication: ");
                 foreach (var error in result.Errors)
