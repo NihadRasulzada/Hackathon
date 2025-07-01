@@ -85,7 +85,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseSwagger();
 app.UseSwaggerUI();
-app.ConfigureExceptionHandler();
+//app.ConfigureExceptionHandler();
 app.UseStaticFiles();
 
 app.UseCors("AllowAllOrigins");

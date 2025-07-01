@@ -21,6 +21,7 @@ using Application.Repositories;
 using Persistence.Repositories;
 
 
+
 namespace Persistence
 {
     public static class ServiceRegistration
@@ -30,19 +31,27 @@ namespace Persistence
             //ReservationRepo
             services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
             services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
+            //RoomRepo
+            services.AddScoped<IRoomReadRepository, RoomReadRepository>();
+            services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
 
+            
 
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
 
-            services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
-            services.AddScoped<IRoomReadRepository, RoomReadRepository>();
-            //ServiceRepo
+            services.AddScoped<IRoomService, RoomService>();
+
+           //ServiceRepo
             services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
             services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
-          
+
+
+            services.AddScoped<IRoomReadRepository, RoomReadRepository>();
+            services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
+
             services.AddScoped<IReservationService, ReservationServices>();
-            services.AddScoped<IRoomService, RoomService>();
+          
 
 
 
