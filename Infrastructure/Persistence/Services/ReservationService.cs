@@ -19,7 +19,7 @@ namespace Persistence.Services
         private readonly IMapper _mapper;
 
 
-        public ReservationService(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
+        public ReservationServices(IReservationReadRepository readRepository, IReservationWriteRepository writeRepository, IMapper mapper)
 
         {
             _readRepository = readRepository;

@@ -16,8 +16,8 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateRoomDto dto)
+        /*[HttpPost]
+        public async Task<IActionResult> Create(CreateRoomDto dto)
         {
             var response = await _service.CreateAsync(dto);
             return StatusCode((int)response.ResponseStatusCode, response);
@@ -62,7 +62,7 @@ namespace API.Controllers
         {
             var response = await _service.UpdateAsync(id, dto);
             return StatusCode((int)response.ResponseStatusCode, response);
-        }
+        }*/
 
     }
 }

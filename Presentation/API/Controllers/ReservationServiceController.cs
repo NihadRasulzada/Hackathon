@@ -14,7 +14,7 @@ public class ReservationServicesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateReservationServiceDTOs dto)
+    /*public async Task<IActionResult> Create([FromBody] CreateReservationServiceDTOs dto)
     {
         var response = await _service.CreateReservationServiceAsync(dto);
         return StatusCode((int)response.ResponseStatusCode, response);
@@ -39,5 +39,5 @@ public class ReservationServicesController : ControllerBase
     {
         var response = await _service.DeleteReservationServiceAsync(id);
         return StatusCode((int)response.ResponseStatusCode, response);
-    }
+    }*/
 }

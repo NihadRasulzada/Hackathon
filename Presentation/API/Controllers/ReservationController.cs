@@ -17,7 +17,7 @@ public class ServiceController : ControllerBase
         _service = service;
     }
 
-    [HttpPost]
+    /*[HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateServiceDTOs dto)
     {
         var response = await _service.CreateServiceAsync(dto);
@@ -71,5 +71,5 @@ public class ServiceController : ControllerBase
     {
         var response = await _service.GetServiceByIdAsyncSoftDelete(id);
         return StatusCode((int)response.ResponseStatusCode, response);
-    }
+    }*/
 }
