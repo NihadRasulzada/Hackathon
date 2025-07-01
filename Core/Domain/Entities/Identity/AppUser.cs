@@ -8,6 +8,7 @@ namespace Domain.Entities.Identity
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string FinCode { get; set; }
 
         [NotMapped]
         public bool IsEmailVerified => !string.IsNullOrEmpty(Email) && EmailConfirmed;
