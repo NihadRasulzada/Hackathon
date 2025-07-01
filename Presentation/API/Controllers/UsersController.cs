@@ -48,6 +48,7 @@ namespace Api.Controllers
             {
                 Email = dto.Email,
                 Name = dto.Name,
+                FinCode= dto.FinCode,
                 Surname = dto.Surname,
                 Username = dto.Username,
                 Password = dto.Password,

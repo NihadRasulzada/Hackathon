@@ -50,10 +50,17 @@ namespace API.Controllers
             var response = await _service.GetByIdSoftDeletedAsync(id);
             return this.HandleResponse(response);
         }
-        [HttpPut("soft-delete/{id}")]
+        [HttpDelete("soft-delete/{id}")]
         public async Task<IActionResult> SoftDelete(string id)
         {
             var response = await _service.SoftDeleteAsync(id);
+            return this.HandleResponse(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var response = await _service.GetAllAsync();
             return this.HandleResponse(response);
         }
 

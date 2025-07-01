@@ -52,7 +52,9 @@ namespace Persistence.Services
                     FinCode = dto.FinCode,
                     FullName = $"{dto.Name} {dto.Surname}",
                     IsDeleted = false,
+
                     PhoneNumber = dto.PhoneNumber,
+
                 });
 
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
