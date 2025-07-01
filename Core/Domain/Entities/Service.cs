@@ -6,7 +6,6 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public string ReservationId { get; set; }
         public ICollection<ReservationService> ReservationServices { get; set; }
     }
 }
