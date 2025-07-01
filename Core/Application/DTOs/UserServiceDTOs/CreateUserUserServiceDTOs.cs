@@ -52,6 +52,10 @@ namespace Persistence.DTOs.UserServiceDTOs
             RuleFor(x => x.PasswordConfirm)
                 .NotEmpty().WithMessage("Password confirmation field cannot be empty.")
                 .Equal(x => x.Password).WithMessage("Password and confirmation must match.");
+
+            RuleFor(x => x.PhoneNumber)
+    .NotEmpty().WithMessage("Phone number field cannot be empty.")
+    .Matches(@"^\+9947\d{7}$").WithMessage("Phone number must be in the format +9947XXXXXXXX, where X is a digit.");
         }
     }
 }
