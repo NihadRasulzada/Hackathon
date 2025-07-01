@@ -19,11 +19,11 @@ namespace Persistence.Services
     {
 
  
-        private readonly IReadRepository<Room> _readRepository;
-        private readonly IWriteRepository<Room> _writeRepository;
+        private readonly IRoomReadRepository _readRepository;
+        private readonly IRoomWriteRepository _writeRepository;
         private readonly IMapper _mapper;
 
-        public RoomService(IReadRepository<Room> readRepository,IWriteRepository<Room> writeRepository, IMapper mapper)
+        public RoomService(IRoomReadRepository readRepository, IRoomWriteRepository writeRepository, IMapper mapper)
         {
      
             _readRepository = readRepository;
