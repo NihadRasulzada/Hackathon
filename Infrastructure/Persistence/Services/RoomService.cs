@@ -65,7 +65,7 @@ namespace Persistence.Services
 
         public async Task<Response<IEnumerable<RoomItemDto>>> GetAllAsync()
         {
-            var rooms = await _readRepository.GetAll().ToListAsync();
+            var rooms = await _readRepository.GetAll().Where(x=>x.IsDeleted==false).ToListAsync();
             var roomItemDtos = _mapper.Map<List<RoomItemDto>>(rooms);
 
             return new Response<IEnumerable<RoomItemDto>>(ResponseStatusCode.Success, roomItemDtos);
@@ -75,7 +75,7 @@ namespace Persistence.Services
         public async Task<Response<IEnumerable<GetRoomDto>>> GetAllSoftDeletedAsync()
         {
             var deletedRooms = await _readRepository
-                .GetWhere(r => r.IsDeleted == false)
+                .GetWhere(r => r.IsDeleted == true)
                 .ToListAsync();
 
             var roomDtos = _mapper.Map<List<GetRoomDto>>(deletedRooms);

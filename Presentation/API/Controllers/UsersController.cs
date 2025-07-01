@@ -53,7 +53,6 @@ namespace Api.Controllers
                 Username = dto.Username,
                 Password = dto.Password,
                 PasswordConfirm = dto.PasswordConfirm,
-                FinCode = dto.FinCode,
                 PhoneNumber = dto.PhoneNumber
             });
 

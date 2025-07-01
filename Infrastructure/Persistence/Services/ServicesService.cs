@@ -45,14 +45,14 @@ namespace Persistence.Services
 
         public async Task<Response<IEnumerable<GetServiceDTOs>>> GetAllServicesAsync()
         {
-            var services = await _readRepository.GetAll().ToListAsync();
+            var services = await _readRepository.GetAll().Where(x=>x.IsDeleted==false).ToListAsync();
             var mapped = _mapper.Map<IEnumerable<GetServiceDTOs>>(services);
             return new Response<IEnumerable<GetServiceDTOs>>(ResponseStatusCode.Success, mapped);
         }
 
         public async Task<Response<GetServiceDTOs>> GetServiceByIdAsync(string id)
         {
-            var service = await _readRepository.GetWhere(s => s.Id == id).FirstOrDefaultAsync();
+            var service = await _readRepository.GetWhere(s => s.Id == id && s.IsDeleted==false).FirstOrDefaultAsync();
             if (service == null)
                 return new Response<GetServiceDTOs>(ResponseStatusCode.NotFound, $"ID-si {id} olan xidmət tapılmadı.");
 
@@ -85,7 +85,7 @@ namespace Persistence.Services
 
         public async Task<Response<IEnumerable<GetServiceDTOs>>> GetAllSoftDeletedServicesAsync()
         {
-            var services = await _readRepository.GetAll().Where(s => s.IsDeleted==false).ToListAsync();
+            var services = await _readRepository.GetAll().Where(s => s.IsDeleted==true).ToListAsync();
             var mapped = _mapper.Map<IEnumerable<GetServiceDTOs>>(services);
             return new Response<IEnumerable<GetServiceDTOs>>(ResponseStatusCode.Success, mapped);
         }
