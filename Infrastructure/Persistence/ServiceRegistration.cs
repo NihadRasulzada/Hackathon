@@ -64,14 +64,14 @@ namespace Persistence
             services.AddScoped<IPaymentService, PaymentService>();
 
 
-            //Rate Limiter
-            services.AddOptions();
-            services.AddMemoryCache();
-            services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
-            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            ////Rate Limiter
+            //services.AddOptions();
+            //services.AddMemoryCache();
+            //services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
+            //services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            //services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            //services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+            //services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
 
 

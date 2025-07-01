@@ -55,7 +55,9 @@ namespace Persistence.DTOs.UserServiceDTOs
 
             RuleFor(x => x.PhoneNumber)
     .NotEmpty().WithMessage("Phone number field cannot be empty.")
-    .Matches(@"^\+9947\d{7}$").WithMessage("Phone number must be in the format +9947XXXXXXXX, where X is a digit.");
+    .Matches(@"^\+994(50|51|55|70|77|99)\d{7}$")
+    .WithMessage("Phone number must be in the format +99450XXXXXXXX, where X is a digit.");
+
         }
     }
 }
