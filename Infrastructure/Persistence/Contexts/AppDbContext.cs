@@ -15,11 +15,10 @@ namespace Persistence.Contexts
         {
         }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Room> Rooms { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
         public DbSet<AppUserOtp> AppUserOtps { get; set; }
-        public DbSet<Menu> Menus { get; set; }
-        public DbSet<Endpoint> Endpoints { get; set; }
+        
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
