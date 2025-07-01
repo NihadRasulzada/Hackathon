@@ -48,7 +48,7 @@ namespace Persistence.Contexts
                     DateTime date = DateTime.UtcNow.AddHours(4);
                     foreach (IProperty property in entry.CurrentValues.Properties)
                     {
-                        allAuditLogs.Add(new AuditLog
+                        var log = new AuditLog
                         {
                             ChangeDate = date,
                             ChangeType = AuditAction.Create,
@@ -57,7 +57,8 @@ namespace Persistence.Contexts
                             PropertyName = property.Name,
                             UserId = userId,
                             NewValue = entry.CurrentValues[property].ToString(),
-                        });
+                        };
+                        allAuditLogs.Add(log);
                     }
                 }
                 else if (entry.State == EntityState.Deleted)

@@ -51,7 +51,9 @@ namespace Api.Controllers
                 Surname = dto.Surname,
                 Username = dto.Username,
                 Password = dto.Password,
-                PasswordConfirm = dto.PasswordConfirm
+                PasswordConfirm = dto.PasswordConfirm,
+                FinCode = dto.FinCode,
+                PhoneNumber = dto.PhoneNumber
             });
 
             return this.HandleResponse(response);
