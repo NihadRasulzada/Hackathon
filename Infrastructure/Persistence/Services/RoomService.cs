@@ -74,7 +74,7 @@ namespace Persistence.Services
         public async Task<Response<IEnumerable<GetRoomDto>>> GetAllSoftDeletedAsync()
         {
             var deletedRooms = await _readRepository
-                .GetWhere(r => r.IsDeleted == true)
+                .GetWhere(r => r.IsDeleted == false)
                 .ToListAsync();
 
             var roomDtos = _mapper.Map<List<GetRoomDto>>(deletedRooms);
