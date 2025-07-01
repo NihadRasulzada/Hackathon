@@ -12,6 +12,9 @@ using Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities.Identity;
+using Application.MappingProfiles;
+using Application.Repositories.ServiceRepository;
+using Persistence.Repositories.ServiceRepository;
 
 
 
@@ -25,13 +28,21 @@ namespace Persistence
             services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
             services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
 
+            //ServiceRepo
+            services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
+            services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
+
+
 
             //Services
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IServicesService, ServicesService>();
+
 
 
             //AutoMapper
             services.AddAutoMapper(typeof(ReservationProfile));
+            services.AddAutoMapper(typeof(ServiceProfile));
 
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Deploy")));
