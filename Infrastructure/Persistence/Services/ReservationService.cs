@@ -30,9 +30,9 @@ namespace Persistence.Services
             _mapper = mapper;
         }
         public async Task<Response> CreateReservationAsync(CreateReservationDTOs dto)
-        {
+        {            
             var customerExists = await _customeReadRepository
-                .GetWhere(c => c.Id == dto.CustomerId && !c.IsDeleted)
+                .GetWhere(c => c.Id == dto.CustomerId )
                 .AnyAsync();
 
             if (!customerExists)
