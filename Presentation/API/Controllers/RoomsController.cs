@@ -17,8 +17,8 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateRoomDto dto)
+        /*[HttpPost]
+        public async Task<IActionResult> Create(CreateRoomDto dto)
         {
             var response = await _service.CreateAsync(dto);
             return this.HandleResponse(response);
@@ -61,8 +61,10 @@ namespace API.Controllers
         public async Task<IActionResult> Update(string id, [FromBody] UpdateRoomDto dto)
         {
             var response = await _service.UpdateAsync(id, dto);
+
             return this.HandleResponse(response);
         }
+
 
     }
 }

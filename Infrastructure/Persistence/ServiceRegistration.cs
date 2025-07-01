@@ -31,13 +31,19 @@ namespace Persistence
             //ReservationRepo
             services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
             services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
+            //RoomRepo
+            services.AddScoped<IRoomReadRepository, RoomReadRepository>();
+            services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
 
+            
 
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomeReadRepository, CustomeReadRepository>();
+
            //ServiceRepo
             services.AddScoped<IServiceReadRepository, ServiceReadRepository>();
             services.AddScoped<IServiceWriteRepository, ServiceWriteRepository>();
+
 
             services.AddScoped<IRoomReadRepository, RoomReadRepository>();
             services.AddScoped<IRoomWriteRepository, RoomWriteRepository>();
