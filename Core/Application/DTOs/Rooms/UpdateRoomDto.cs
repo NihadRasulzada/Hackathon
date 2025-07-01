@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Application.DTOs.Rooms
 {
     public record UpdateRoomDto
-    (        
+    (
         int Number,
         bool RoomStatus,
         decimal PricePerNight,
