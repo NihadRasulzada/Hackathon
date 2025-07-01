@@ -37,10 +37,11 @@ namespace Persistence
                 await roleManager.CreateAsync(role);
             }
 
-            var superAdminUser = await userManager.FindByNameAsync(configuration.GetValue<string>("SuperAdmin:Mail"));
+            var superAdminUser = await userManager.FindByNameAsync(configuration.GetValue<string>("SuperAdmin:UserName"));
+            //var superAdminUser = await userManager.FindByNameAsync("nihadrs2005@gmail.com");
             if (superAdminUser == null)
             {
-                superAdminUser = new AppUser { UserName = configuration.GetValue<string>("SuperAdmin:UserName"), Email = configuration.GetValue<string>("SuperAdmin:Mail"), Id = Guid.NewGuid().ToString(), EmailConfirmed = true, Name = configuration.GetValue<string>("SuperAdmin:UserName"), Surname = configuration.GetValue<string>("SuperAdmin:UserName") };
+                superAdminUser = new AppUser { UserName = configuration.GetValue<string>("SuperAdmin:UserName"), Email = configuration.GetValue<string>("SuperAdmin:Mail"), Id = Guid.NewGuid().ToString(), EmailConfirmed = true, Name = configuration.GetValue<string>("SuperAdmin:UserName"), Surname = configuration.GetValue<string>("SuperAdmin:UserName"), FinCode = "" };
                 var createUserResult = await userManager.CreateAsync(superAdminUser);
                 if (createUserResult.Succeeded)
                 {

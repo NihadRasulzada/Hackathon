@@ -1,9 +1,7 @@
-﻿using Application.Abstractions.Services;
-
-using Application.DTOs.ReservationDTOs;
-
+﻿using Api.Extensions;
+using Application.Abstractions.Services;
 using Application.DTOs.ServiceDTOs;
-
+using Application.ResponceObject;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
@@ -20,56 +18,56 @@ public class ServiceController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateServiceDTOs dto)
     {
-        var response = await _service.CreateServiceAsync(dto);
-        return StatusCode((int)response.ResponseStatusCode, response);
+        Response response = await _service.CreateServiceAsync(dto);
+        return this.HandleResponse(response);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         var response = await _service.GetAllServicesAsync();
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
         var response = await _service.GetServiceByIdAsync(id);
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, [FromBody] UpdateServiceDTOs dto)
     {
         var response = await _service.UpdateServiceAsync(id, dto);
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
         var response = await _service.DeleteServiceAsync(id);
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 
     [HttpGet("soft-deleted")]
     public async Task<IActionResult> GetAllSoftDeleted()
     {
         var response = await _service.GetAllSoftDeletedServicesAsync();
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 
     [HttpDelete("soft-delete/{id}")]
     public async Task<IActionResult> SoftDelete(string id)
     {
         var response = await _service.SoftDeleteServiceAsync(id);
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 
     [HttpGet("soft-delete/{id}")]
     public async Task<IActionResult> GetByIdSoftDelete(string id)
     {
         var response = await _service.GetServiceByIdAsyncSoftDelete(id);
-        return StatusCode((int)response.ResponseStatusCode, response);
+        return this.HandleResponse(response);
     }
 }

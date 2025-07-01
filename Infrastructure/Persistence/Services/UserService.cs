@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Services;
 using Application.DTOs.UserServiceDTOs.Responses;
 using Application.Helpers;
+using Application.Repositories.CustomerRepository;
 using Application.ResponceObject;
 using Application.ResponceObject.Enums;
 using Domain.Entities.Identity;
@@ -16,12 +17,14 @@ namespace Persistence.Services
         readonly UserManager<AppUser> _userManager;
         readonly IConfiguration _configuration;
         readonly IMailService _mailService;
+        readonly ICustomerWriteRepository _customerWriteRepository;
 
-        public UserService(UserManager<AppUser> userManager, IConfiguration configuration, IMailService mailService)
+        public UserService(UserManager<AppUser> userManager, IConfiguration configuration, IMailService mailService, ICustomerWriteRepository customerWriteRepository)
         {
             _userManager = userManager;
             _configuration = configuration;
             _mailService = mailService;
+            _customerWriteRepository = customerWriteRepository;
         }
 
         public async Task<Response> CreateAsync(CreateUserUserServiceDTOs dto)
@@ -33,16 +36,25 @@ namespace Persistence.Services
                 Email = dto.Email,
                 Name = dto.Name,
                 Surname = dto.Surname,
+                FinCode = dto.FinCode,
             };
             IdentityResult result = await _userManager.CreateAsync(user, dto.Password);
 
 
             if (result.Succeeded)
             {
+                await _customerWriteRepository.AddAsync(new Domain.Entities.Customer
+                {
+                    FinCode = dto.FinCode,
+                    FullName = $"{dto.Name} {dto.Surname}",
+                    IsDeleted = false,                    
+                });
+                
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 token = token.UrlEncode();
                 var confirmationLink = $"{_configuration["FrontClientUrl"]}/confirm-email/{user.Id}/{token}";
                 await _mailService.SendMailAsync(dto.Email, "Please confirm your email", $"Please confirm your email by clicking <a href='{confirmationLink}'>here</a>");
+                await _customerWriteRepository.SaveAsync();
                 return new Response(ResponseStatusCode.Success, "User created successfully. Please check your email to confirm your account.");
             }
             else
