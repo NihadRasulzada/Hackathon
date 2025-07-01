@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ServiceController : ControllerBase
+public class ReservationController : ControllerBase
 {
     private readonly IServicesService _service;
 
-    public ServiceController(IServicesService service)
+    public ReservationController(IServicesService service)
     {
         _service = service;
     }
 
-    /*[HttpPost]
+    [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateServiceDTOs dto)
     {
         Response response = await _service.CreateServiceAsync(dto);
@@ -57,7 +57,7 @@ public class ServiceController : ControllerBase
         return this.HandleResponse(response);
     }
 
-    [HttpDelete("soft-delete/{id}")]
+    [HttpPut("soft-delete/{id}")]
     public async Task<IActionResult> SoftDelete(string id)
     {
         var response = await _service.SoftDeleteServiceAsync(id);

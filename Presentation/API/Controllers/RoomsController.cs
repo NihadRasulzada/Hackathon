@@ -17,7 +17,7 @@ namespace API.Controllers
             _service = service;
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateRoomDto dto)
         {
             var response = await _service.CreateAsync(dto);
