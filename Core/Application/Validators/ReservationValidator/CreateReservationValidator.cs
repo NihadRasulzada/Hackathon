@@ -12,9 +12,8 @@ namespace Application.Validators.ReservationValidator
                 .MaximumLength(50).WithMessage("Müştəri ID 50 simvoldan uzun ola bilməz.");
 
             RuleFor(x => x.RoomId)
-                .NotEmpty().WithMessage("Otaq ID boş ola bilməz.")
-                .Must(id => int.TryParse(id, out var val) && val > 0)
-                .WithMessage("Otaq ID yalnız 0-dan böyük rəqəm olmalıdır.");
+                .NotEmpty().WithMessage("Otaq ID boş ola bilməz.");
+                
 
             RuleFor(x => x.CheckInDate)
                 .NotEmpty().WithMessage("Giriş tarixi qeyd olunmalıdır.")

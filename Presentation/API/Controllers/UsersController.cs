@@ -45,6 +45,7 @@ namespace Api.Controllers
         public async Task<IActionResult> CreateUser(CreateUserUserServiceDTOs dto)
         {
             var response = await _userService.CreateAsync(dto);
+
             return this.HandleResponse(response);
         }
 
