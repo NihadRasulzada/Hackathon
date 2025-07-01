@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repositories.ReservationRepository;
 using Persistence.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Domain.Entities.Identity;
+
 
 
 namespace Persistence
